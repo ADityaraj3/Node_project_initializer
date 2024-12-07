@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Res } from '@nestjs/common';
+import { Controller, Post, Body, Res, Get } from '@nestjs/common';
 import { Response } from 'express';
 import { NextAppService } from './next-app.service';
 
@@ -14,15 +14,20 @@ export class NextAppController {
   @Post('create')
   async createNextApp(
     @Res() res: Response,
-    @Body('structure') structure: any,
     @Body('packageJson') dependencies: { name: string; version: string }[],
+    @Body('structure') structure: any,
     @Body('appName') appName: string,
   ) {
     return this.nextAppService.createNextApp(
-      res,
       structure,
       dependencies,
+      res,
       appName,
     );
+  }
+
+  @Get('fetch-cached-structure')
+  async fetchChachedStructure() {
+    return this.nextAppService.fetchChachedStructure();
   }
 }

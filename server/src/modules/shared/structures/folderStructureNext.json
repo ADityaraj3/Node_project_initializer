@@ -1,0 +1,111 @@
+{
+  "name": "my-next-app",
+  "type": "directory",
+  "children": [
+    {
+      "name": ".eslintrc.json",
+      "type": "file"
+    },
+    {
+      "name": ".gitignore",
+      "type": "file"
+    },
+    {
+      "name": "README.md",
+      "type": "file"
+    },
+    {
+      "name": "next-env.d.ts",
+      "type": "file"
+    },
+    {
+      "name": "next.config.ts",
+      "type": "file"
+    },
+    {
+      "name": "package.json",
+      "type": "file"
+    },
+    {
+      "name": "public",
+      "type": "directory",
+      "children": [
+        {
+          "name": "file.svg",
+          "type": "file"
+        },
+        {
+          "name": "globe.svg",
+          "type": "file"
+        },
+        {
+          "name": "next.svg",
+          "type": "file"
+        },
+        {
+          "name": "vercel.svg",
+          "type": "file"
+        },
+        {
+          "name": "window.svg",
+          "type": "file"
+        }
+      ],
+      "id": "public1730514609275"
+    },
+    {
+      "name": "src",
+      "type": "directory",
+      "children": [
+        {
+          "name": "app",
+          "type": "directory",
+          "children": [
+            {
+              "name": "favicon.ico",
+              "type": "file"
+            },
+            {
+              "name": "fonts",
+              "type": "directory",
+              "children": [
+                {
+                  "name": "GeistMonoVF.woff",
+                  "type": "file"
+                },
+                {
+                  "name": "GeistVF.woff",
+                  "type": "file"
+                }
+              ],
+              "id": "fonts1730514609275"
+            },
+            {
+              "name": "globals.css",
+              "type": "file"
+            },
+            {
+              "name": "layout.tsx",
+              "type": "file"
+            },
+            {
+              "name": "page.module.css",
+              "type": "file"
+            },
+            {
+              "name": "page.tsx",
+              "type": "file"
+            }
+          ],
+          "id": "app1730514609275"
+        }
+      ],
+      "id": "src1730514609275"
+    },
+    {
+      "name": "tsconfig.json",
+      "type": "file"
+    }
+  ],
+  "id": "my-next-app-08a73bc4-c464-438d-849d-d44272bd09161730514609274"
+}

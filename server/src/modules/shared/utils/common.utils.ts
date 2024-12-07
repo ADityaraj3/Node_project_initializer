@@ -35,6 +35,8 @@ export const updatePackageJson = (
       packageJson.dependencies = {};
     }
 
+    // console.log(dependencies)
+
     dependencies.forEach((pkg) => {
       if (pkg.name !== '') {
         packageJson.dependencies[pkg.name] = `^${pkg.version}`;

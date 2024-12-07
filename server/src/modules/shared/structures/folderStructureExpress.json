@@ -1,0 +1,90 @@
+{
+  "name": "my-express-app",
+  "type": "directory",
+  "children": [
+    {
+      "name": "app.js",
+      "type": "file"
+    },
+    {
+      "name": "bin",
+      "type": "directory",
+      "children": [
+        {
+          "name": "www",
+          "type": "file"
+        }
+      ],
+      "id": "bin1730515252920"
+    },
+    {
+      "name": "package.json",
+      "type": "file"
+    },
+    {
+      "name": "public",
+      "type": "directory",
+      "children": [
+        {
+          "name": "images",
+          "type": "directory",
+          "children": [],
+          "id": "images1730515252920"
+        },
+        {
+          "name": "javascripts",
+          "type": "directory",
+          "children": [],
+          "id": "javascripts1730515252920"
+        },
+        {
+          "name": "stylesheets",
+          "type": "directory",
+          "children": [
+            {
+              "name": "style.css",
+              "type": "file"
+            }
+          ],
+          "id": "stylesheets1730515252920"
+        }
+      ],
+      "id": "public1730515252920"
+    },
+    {
+      "name": "routes",
+      "type": "directory",
+      "children": [
+        {
+          "name": "index.js",
+          "type": "file"
+        },
+        {
+          "name": "users.js",
+          "type": "file"
+        }
+      ],
+      "id": "routes1730515252920"
+    },
+    {
+      "name": "views",
+      "type": "directory",
+      "children": [
+        {
+          "name": "error.jade",
+          "type": "file"
+        },
+        {
+          "name": "index.jade",
+          "type": "file"
+        },
+        {
+          "name": "layout.jade",
+          "type": "file"
+        }
+      ],
+      "id": "views1730515252920"
+    }
+  ],
+  "id": "my-express-app-33dff4e3-f3e2-4781-b71e-eabdeb6a0b1a1730515252920"
+}

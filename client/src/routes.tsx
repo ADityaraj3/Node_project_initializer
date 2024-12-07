@@ -7,6 +7,7 @@ import Nest from "./modules/NestJs/Nest";
 import Next from "./modules/NextJs/Next";
 import Express from "./modules/Express/Express";
 import Angular from "./modules/Angular/Angular";
+import ContactUsPage from "./modules/Home/ContactUsPage/ContactUsPage";
 
 function AppRoutes() {
 
@@ -21,6 +22,7 @@ function AppRoutes() {
                 <Route path="/next" element={<Next />} />
                 <Route path="/express" element={<Express />} />
                 <Route path="/angular" element={<Angular />} />
+                <Route path="/contact" element={<ContactUsPage />} />
             </Routes>
             <Footer />
         </>

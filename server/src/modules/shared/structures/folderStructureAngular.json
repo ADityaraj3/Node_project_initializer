@@ -1,0 +1,119 @@
+{
+  "name": "my-angular-app",
+  "type": "directory",
+  "children": [
+    {
+      "name": ".editorconfig",
+      "type": "file"
+    },
+    {
+      "name": ".gitignore",
+      "type": "file"
+    },
+    {
+      "name": ".vscode",
+      "type": "directory",
+      "children": [
+        {
+          "name": "extensions.json",
+          "type": "file"
+        },
+        {
+          "name": "launch.json",
+          "type": "file"
+        },
+        {
+          "name": "tasks.json",
+          "type": "file"
+        }
+      ],
+      "id": ".vscode1730515268707"
+    },
+    {
+      "name": "README.md",
+      "type": "file"
+    },
+    {
+      "name": "angular.json",
+      "type": "file"
+    },
+    {
+      "name": "package.json",
+      "type": "file"
+    },
+    {
+      "name": "public",
+      "type": "directory",
+      "children": [
+        {
+          "name": "favicon.ico",
+          "type": "file"
+        }
+      ],
+      "id": "public1730515268707"
+    },
+    {
+      "name": "src",
+      "type": "directory",
+      "children": [
+        {
+          "name": "app",
+          "type": "directory",
+          "children": [
+            {
+              "name": "app.component.html",
+              "type": "file"
+            },
+            {
+              "name": "app.component.scss",
+              "type": "file"
+            },
+            {
+              "name": "app.component.spec.ts",
+              "type": "file"
+            },
+            {
+              "name": "app.component.ts",
+              "type": "file"
+            },
+            {
+              "name": "app.config.ts",
+              "type": "file"
+            },
+            {
+              "name": "app.routes.ts",
+              "type": "file"
+            }
+          ],
+          "id": "app1730515268707"
+        },
+        {
+          "name": "index.html",
+          "type": "file"
+        },
+        {
+          "name": "main.ts",
+          "type": "file"
+        },
+        {
+          "name": "styles.scss",
+          "type": "file"
+        }
+      ],
+      "id": "src1730515268707"
+    },
+    {
+      "name": "tsconfig.app.json",
+      "type": "file"
+    },
+    {
+      "name": "tsconfig.json",
+      "type": "file"
+    },
+    {
+      "name": "tsconfig.spec.json",
+      "type": "file"
+    }
+  ],
+  "id": "my-angular-app-1313f9b1-009c-4324-b175-4d9dc6455d391730515268707"
+}

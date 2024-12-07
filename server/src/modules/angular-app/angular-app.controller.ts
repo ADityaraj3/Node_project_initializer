@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post, Res } from '@nestjs/common';
 import { AngularAppService } from './angular-app.service';
 
 @Controller('angular-app')
@@ -26,5 +26,10 @@ export class AngularAppController {
       res,
       appName,
     );
+  }
+
+  @Get('fetch-chached-structure')
+  async fetchChachedStructure() {
+    return this.angularAppService.fetchChachedStructure();
   }
 }

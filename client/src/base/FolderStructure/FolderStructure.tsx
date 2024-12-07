@@ -70,7 +70,7 @@ const FolderStructure: React.FC<FolderStructureProps> = ({
               )}
             </div>
             <ul
-              className={`pl-5 mt-1 overflow-hidden transition-all duration-500 ${isExpanded ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0 text-white'
+              className={`pl-5 my-[4px] overflow-hidden transition-all duration-500 ${isExpanded ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0 text-white'
                 }`}
             >
               {node.children && node.children.map((child) => renderStructure(child))}
@@ -78,7 +78,7 @@ const FolderStructure: React.FC<FolderStructureProps> = ({
           </>
         ) : (
           <div className="flex items-center text-white">
-            <FaRegFile className="mr-2" />
+            <FaRegFile className="mr-2 my-[4px]" />
             <span>{node.name}</span>
           </div>
         )}

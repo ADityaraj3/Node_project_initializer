@@ -26,7 +26,6 @@ export class ViteAppService {
     try {
       const uniqueAppName = `${appName}-${uuidv4()}`;
       const appDir = path.join(this.tempDir, uniqueAppName);
-
       if (fs.existsSync(appDir)) {
         fs.rmSync(appDir, { recursive: true, force: true });
       }
@@ -36,9 +35,16 @@ export class ViteAppService {
       }
 
       await runCommand(
-        `npm create vite@latest ${appName} -- --template ${framework}`,
+        `npm create vite@latest ${uniqueAppName} -- --template ${framework}`,
         this.tempDir,
       );
+
+      while (!fs.existsSync(appDir)) {
+        await runCommand(
+          `npm create vite@latest ${uniqueAppName} -- --template ${framework}`,
+          this.tempDir,
+        );
+      }
 
       updatePackageJson(appDir, dependencies);
       if (structure) {

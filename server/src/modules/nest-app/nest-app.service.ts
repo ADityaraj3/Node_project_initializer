@@ -79,6 +79,15 @@ export class NestAppService {
         );
       }
       const folderStructure = generateStructure(appPath);
+      const outputDir = 'src/modules/shared/structures';
+      const outputPath = path.join(outputDir, 'folderStructureNest.json');
+
+      if (!fs.existsSync(outputDir)) {
+        fs.mkdirSync(outputDir, { recursive: true });
+      }
+
+      fs.writeFileSync(outputPath, JSON.stringify(folderStructure, null, 2));
+
       res.json(folderStructure);
 
       if (fs.existsSync(appDir)) {
@@ -88,5 +97,12 @@ export class NestAppService {
       console.error('Error fetching structure:', error);
       res.status(500).send('Error fetching structure');
     }
+  }
+
+  async fetchChachedStructure() {
+    const outputDir = 'src/modules/shared/structures';
+    const outputPath = path.join(outputDir, 'folderStructureNest.json');
+    const folderStructure = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
+    return folderStructure;
   }
 }

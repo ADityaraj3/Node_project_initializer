@@ -35,12 +35,20 @@ export class NextAppService {
       }
 
       await runCommand(
-        `npx create-next-app@latest ${uniqueAppName} --ts --use-npm --skip-install --eslint --app --src-dir --no-tailwind --import-alias "@/src/*"`,
+        `npx create-next-app@latest ${uniqueAppName} --ts --use-npm --skip-install --eslint --app --src-dir --no-tailwind --import-alias "@/src/*" --turbo --yes`,
         this.tempDir,
       );
 
       const appPath = path.join(this.tempDir, uniqueAppName);
       const folderStructure = generateStructure(appPath);
+      const outputDir = 'src/modules/shared/structures';
+      const outputPath = path.join(outputDir, 'folderStructureNext.json');
+
+      if (!fs.existsSync(outputDir)) {
+        fs.mkdirSync(outputDir, { recursive: true });
+      }
+
+      fs.writeFileSync(outputPath, JSON.stringify(folderStructure, null, 2));
       res.json(folderStructure);
 
       if (fs.existsSync(appDir)) {
@@ -71,7 +79,7 @@ export class NextAppService {
       }
 
       await runCommand(
-        `npx create-next-app@latest ${appName} --ts --use-npm --skip-install --eslint --app --src-dir --no-tailwind --import-alias "@/src/*"`,
+        `npx create-next-app@latest ${uniqueAppName} --ts --use-npm --skip-install --eslint --app --src-dir --no-tailwind --import-alias "@/src/*" --turbo --yes`,
         this.tempDir,
       );
 
@@ -79,10 +87,18 @@ export class NextAppService {
 
       updatePackageJson(appDir, dependencies);
 
-      await createZipArchive(appDir, this.tempDir, this.appName, res);
+      await createZipArchive(appDir, this.tempDir, uniqueAppName, res);
+
     } catch (error) {
       console.error('Error creating Next.js app:', error);
       res.status(500).send('Error creating Next.js app');
     }
+  }
+
+  async fetchChachedStructure() {
+    const outputDir = 'src/modules/shared/structures';
+    const outputPath = path.join(outputDir, 'folderStructureNext.json');
+    const folderStructure = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
+    return folderStructure;
   }
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post, Res } from '@nestjs/common';
 import { NestAppService } from './nest-app.service';
 
 @Controller('nest-app')
@@ -23,5 +23,10 @@ export class NestAppController {
   @Post('fetch-structure')
   fetchStructure(@Res() res: Response, @Body('appName') appName: string) {
     return this.nestAppService.fetchStructure(appName, res);
+  }
+
+  @Get('fetch-cached-structure')
+  async fetchChachedStructure() {
+    return this.nestAppService.fetchChachedStructure();
   }
 }

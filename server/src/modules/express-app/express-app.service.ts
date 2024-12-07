@@ -44,6 +44,15 @@ export class ExpressAppService {
         fs.rmSync(appDir, { recursive: true, force: true });
       }
 
+      const outputDir = 'src/modules/shared/structures';
+      const outputPath = path.join(outputDir, 'folderStructureExpress.json');
+
+      if (!fs.existsSync(outputDir)) {
+        fs.mkdirSync(outputDir, { recursive: true });
+      }
+
+      fs.writeFileSync(outputPath, JSON.stringify(folderStructure, null, 2));
+
       return folderStructure;
     } catch (error) {
       console.error('Error fetching structure:', error);
@@ -80,5 +89,12 @@ export class ExpressAppService {
       console.error('Error creating Express.js app:', error);
       res.status(500).send('Error creating Express.js app');
     }
+  }
+
+  async fetchChachedStructure() {
+    const outputDir = 'src/modules/shared/structures';
+    const outputPath = path.join(outputDir, 'folderStructureExpress.json');
+    const folderStructure = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
+    return folderStructure;
   }
 }

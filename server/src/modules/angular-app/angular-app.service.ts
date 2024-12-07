@@ -40,6 +40,16 @@ export class AngularAppService {
 
       const appPath = path.join(this.tempDir, uniqueAppName);
       const folderStructure = generateStructure(appPath);
+
+      const outputDir = 'src/modules/shared/structures';
+      const outputPath = path.join(outputDir, 'folderStructureAngular.json');
+
+      if (!fs.existsSync(outputDir)) {
+        fs.mkdirSync(outputDir, { recursive: true });
+      }
+
+      fs.writeFileSync(outputPath, JSON.stringify(folderStructure, null, 2));
+
       res.json(folderStructure);
 
       if (fs.existsSync(appDir)) {
@@ -84,5 +94,15 @@ export class AngularAppService {
       console.error('Error creating Angular app:', error);
       res.status(500).send('Error creating Angular app');
     }
+  }
+
+  async fetchChachedStructure() {
+    const folderStructure = JSON.parse(
+      fs.readFileSync(
+        'src/modules/shared/structures/folderStructureAngular.json',
+        'utf8',
+      ),
+    );
+    return folderStructure;
   }
 }

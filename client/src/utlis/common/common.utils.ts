@@ -1,5 +1,8 @@
 import axios from 'axios';
 import { Node, PackageJson } from '../Interfaces/Interface';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 export const addNpmPackage = async (
     packageName: string,
@@ -87,7 +90,31 @@ export const handleDeleteDirectory = (
 
 export const fetchStructureProject = async (
     url: string,
-    body: object,
+    setStructure: React.Dispatch<React.SetStateAction<Node | null>>
+) => {
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch the structure');
+        }
+
+        const data = await response.json();
+        setStructure(data);
+    } catch (error) {
+        console.error('Error fetching structure:', error);
+        setStructure({ name: 'root', type: 'directory', children: [], deletable: false, id: 'root' });
+    }
+};
+
+export const fetchStructureProjectVite = async (
+    url: string,
+    body: any,
     setStructure: React.Dispatch<React.SetStateAction<Node | null>>
 ) => {
     try {
@@ -104,47 +131,69 @@ export const fetchStructureProject = async (
         }
 
         const data = await response.json();
-        setStructure(data);
+        const updatedStructure = {
+            ...data,
+            name: 'my-vite-app',
+        };
+
+        setStructure(updatedStructure);
     } catch (error) {
         console.error('Error fetching structure:', error);
-        setStructure({ name: 'root', type: 'directory', children: [] });
+        setStructure({ name: 'root', type: 'directory', children: [], deletable: false, id: 'root' });
     }
-};
+}
+
 
 export const handleSaveStructureProject = async (
     url: string,
     body: object,
-    projectName: string
+    projectName: string,
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
+
+    const toastId = toast.info('Preparing your download, please wait...', {
+        position: "top-right",
+        autoClose: false,
+        hideProgressBar: false,
+        closeOnClick: true,
+        draggable: true,
+    });
+
     try {
-        fetch(url, {
+        const response = await fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(body),
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.blob();
-            })
-            .then(blob => {
-                const downloadUrl = window.URL.createObjectURL(new Blob([blob]));
-                const link = document.createElement('a');
-                link.href = downloadUrl;
-                link.setAttribute('download', `${projectName}.zip`);
-                document.body.appendChild(link);
-                link.click();
-                link?.parentNode?.removeChild(link);
-            })
-            .catch(error => {
-                console.error('There was an error with the fetch operation:', error);
-            });
+        });
+
+        if (response.status !== 201) {
+            throw new Error('Failed to save structure: Response status was not 201');
+        }
+
+        const blob = await response.blob();
+        const downloadUrl = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = downloadUrl;
+        link.setAttribute('download', `${projectName}.zip`);
+        document.body.appendChild(link);
+        link.click();
+        link?.parentNode?.removeChild(link);
+
+        toast.dismiss(toastId);
+        toast.success('File downloaded successfully!', {
+            position: "top-right",
+            autoClose: 3000,
+        });
     } catch (error) {
         console.error('Error saving structure:', error);
-        alert('Error saving structure.');
+        toast.dismiss(toastId);
+        toast.error('Error saving structure. Please try again.', {
+            position: "top-right",
+            autoClose: 5000,
+        });
+    } finally {
     }
 };
 

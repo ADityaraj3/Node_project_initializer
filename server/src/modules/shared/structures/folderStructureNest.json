@@ -1,0 +1,81 @@
+{
+  "name": "my-nest-app",
+  "type": "directory",
+  "children": [
+    {
+      "name": ".eslintrc.js",
+      "type": "file"
+    },
+    {
+      "name": ".prettierrc",
+      "type": "file"
+    },
+    {
+      "name": "README.md",
+      "type": "file"
+    },
+    {
+      "name": "nest-cli.json",
+      "type": "file"
+    },
+    {
+      "name": "package-lock.json",
+      "type": "file"
+    },
+    {
+      "name": "package.json",
+      "type": "file"
+    },
+    {
+      "name": "src",
+      "type": "directory",
+      "children": [
+        {
+          "name": "app.controller.spec.ts",
+          "type": "file"
+        },
+        {
+          "name": "app.controller.ts",
+          "type": "file"
+        },
+        {
+          "name": "app.module.ts",
+          "type": "file"
+        },
+        {
+          "name": "app.service.ts",
+          "type": "file"
+        },
+        {
+          "name": "main.ts",
+          "type": "file"
+        }
+      ],
+      "id": "src1730473138411"
+    },
+    {
+      "name": "test",
+      "type": "directory",
+      "children": [
+        {
+          "name": "app.e2e-spec.ts",
+          "type": "file"
+        },
+        {
+          "name": "jest-e2e.json",
+          "type": "file"
+        }
+      ],
+      "id": "test1730473138411"
+    },
+    {
+      "name": "tsconfig.build.json",
+      "type": "file"
+    },
+    {
+      "name": "tsconfig.json",
+      "type": "file"
+    }
+  ],
+  "id": "my-nest-app-5aba1471-0b71-4125-a5dd-b3011fb098aa1730473138411"
+}

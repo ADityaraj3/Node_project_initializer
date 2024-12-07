@@ -22,7 +22,7 @@ export interface Node {
     type: 'directory' | 'file';
     children?: Node[];
     deletable?: boolean;
-    id?: string | null;
+    id: string;
 }
 
 export interface FolderStructureProps {

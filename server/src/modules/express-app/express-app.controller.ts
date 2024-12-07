@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post, Res } from '@nestjs/common';
 import { ExpressAppService } from './express-app.service';
 import { Response } from 'express';
 
@@ -24,5 +24,10 @@ export class ExpressAppController {
       res,
       appName,
     );
+  }
+
+  @Get('fetch-cached-structure')
+  async fetchChachedStructure() {
+    return this.expressAppService.fetchChachedStructure();
   }
 }

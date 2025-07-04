@@ -1,9 +1,22 @@
-import React, { useState } from 'react';
-import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import { HiMenuAlt3, HiX } from 'react-icons/hi';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Header: React.FC = () => {
     const [nav, setNav] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
+
+    // Add scroll effect
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrolled(window.scrollY > 20);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
 
     const handleNav = () => {
         setNav(!nav);
@@ -20,53 +33,61 @@ const Header: React.FC = () => {
     ];
 
     const navLinkClasses = ({ isActive }: { isActive: boolean }) =>
-        `p-2 sm:p-4 rounded-xl m-2 cursor-pointer duration-300 ${
-            isActive ? 'bg-[#00df9a] text-black' : 'hover:bg-[#00df9a] hover:text-black'
+        `px-4 py-2 rounded-lg transition-all duration-300 font-medium ${
+            isActive 
+                ? 'bg-primary text-white shadow-lg shadow-primary/20' 
+                : 'text-gray-300 hover:bg-gray-800 hover:text-white'
         }`;
 
     return (
-        <div className='bg-[#1e1e1e] flex justify-between items-center h-24 max-w-[4000px] mx-auto px-4 text-white drop-shadow-[0_3px_3px_rgba(0,0,0,0.80)]'>
-            <div className='flex items-center'>
-                <img src="/public/logo.png" className="w-10 h-10" alt="logo" />
-                <h1 className='ml-2 text-2xl sm:text-3xl font-bold text-[#00df9a]'>INITIALIZE.</h1>
-            </div>
+        <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-darker/90 backdrop-blur-md shadow-lg' : 'bg-dark'}`}>
+            <div className='flex justify-between items-center max-w-7xl mx-auto px-4 py-4'>
+                <NavLink to="/" className='flex items-center gap-2'>
+                    <div className="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center text-white font-bold text-lg">I</div>
+                    <h1 className='text-2xl font-bold'>
+                        <span className='bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent'>INITIALIZE</span>
+                    </h1>
+                </NavLink>
 
-            <ul className='hidden md:flex'>
-                {navItems.map(item => (
-                    <li key={item.id}>
-                        <NavLink to={item.link} className={navLinkClasses}>
+                <nav className='hidden md:flex items-center space-x-2'>
+                    {navItems.map(item => (
+                        <NavLink key={item.id} to={item.link} className={navLinkClasses}>
                             {item.text}
                         </NavLink>
-                    </li>
-                ))}
-            </ul>
+                    ))}
+                </nav>
 
-            <div onClick={handleNav} className='block md:hidden'>
-                {nav ? <AiOutlineClose size={25} /> : <AiOutlineMenu size={25} />}
+                <button onClick={handleNav} className='block md:hidden text-2xl' aria-label="Toggle menu">
+                    {nav ? <HiX className="text-white" /> : <HiMenuAlt3 className="text-white" />}
+                </button>
             </div>
 
-            <ul
-                className={
-                    nav
-                        ? 'fixed top-0 left-0 w-[60%] h-full border-r border-r-gray-900 bg-[#1e1e1e] ease-in-out duration-500 z-[1000]' 
-                        : 'fixed top-0 left-[-100%] w-[60%] h-full ease-in-out duration-500'
-                }
-            >
-                <div className='flex items-center m-4'>
-                    <img src="/public/logo.png" className="w-10 h-10" alt="logo" />
-                    <h1 className='ml-2 text-2xl sm:text-3xl font-bold text-[#00df9a]'>INITIALIZE.</h1>
-                </div>
-
-                {navItems.map(item => (
-                    <li key={item.id} className='p-4 border-b border-gray-600 bg-[#1e1e1e]'>
-                        <NavLink to={item.link} className={navLinkClasses}>
-                            {item.text}
-                        </NavLink>
-                    </li>
-                ))}
-            </ul>
-        </div>
+            <AnimatePresence>
+                {nav && (
+                    <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="md:hidden overflow-hidden bg-darker border-t border-gray-800"
+                    >
+                        <nav className='flex flex-col p-4 space-y-3'>
+                            {navItems.map(item => (
+                                <NavLink 
+                                    key={item.id} 
+                                    to={item.link} 
+                                    className={navLinkClasses}
+                                    onClick={() => setNav(false)}
+                                >
+                                    {item.text}
+                                </NavLink>
+                            ))}
+                        </nav>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </header>
     );
-}
+};
 
 export default Header;

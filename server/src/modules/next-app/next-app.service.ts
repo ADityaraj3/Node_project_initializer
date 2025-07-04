@@ -21,39 +21,21 @@ export class NextAppService {
     this.tempDir = path.join(__dirname, '..', `temp-${uuidv4()}`);
   }
 
-  async fetchStructure(appName: string, res: any) {
+  async fetchStructure(appName: string, res: any, language: string) {
     try {
-      const uniqueAppName = `${appName}-${uuidv4()}`;
-      const appDir = path.join(this.tempDir, uniqueAppName);
+      const templateBaseDir = path.resolve(
+        __dirname,
+        '../../../..',
+        'next-templates',
+      )
 
-      if (fs.existsSync(appDir)) {
-        fs.rmSync(appDir, { recursive: true, force: true });
-      }
-
-      if (!fs.existsSync(this.tempDir)) {
-        fs.mkdirSync(this.tempDir);
-      }
-
-      await runCommand(
-        `npx create-next-app@latest ${uniqueAppName} --ts --use-npm --skip-install --eslint --app --src-dir --no-tailwind --import-alias "@/src/*" --turbo --yes`,
-        this.tempDir,
+      const templateDir = path.join(
+        templateBaseDir,
+        language === 'ts' ? 'next-ts-template' : 'next-js-template',
       );
 
-      const appPath = path.join(this.tempDir, uniqueAppName);
-      const folderStructure = generateStructure(appPath);
-      const outputDir = 'src/modules/shared/structures';
-      const outputPath = path.join(outputDir, 'folderStructureNext.json');
-
-      if (!fs.existsSync(outputDir)) {
-        fs.mkdirSync(outputDir, { recursive: true });
-      }
-
-      fs.writeFileSync(outputPath, JSON.stringify(folderStructure, null, 2));
+      const folderStructure = generateStructure(templateDir);
       res.json(folderStructure);
-
-      if (fs.existsSync(appDir)) {
-        fs.rmSync(appDir, { recursive: true, force: true });
-      }
     } catch (error) {
       console.error('Error fetching structure:', error);
       res.status(500).send('Error fetching structure');
@@ -65,30 +47,50 @@ export class NextAppService {
     dependencies: { name: string; version: string }[],
     res: any,
     appName: string,
+    language: 'js' | 'ts' = 'ts',
   ) {
     try {
-      if (!fs.existsSync(this.tempDir)) {
-        fs.mkdirSync(this.tempDir);
+      const templateBaseDir = path.resolve(
+        __dirname,
+        '../../../..',
+        'next-templates',
+      );
+      const templateDir = path.join(
+        templateBaseDir,
+        language === 'ts' ? 'next-ts-template' : 'next-js-template',
+      );
+
+      if (!fs.existsSync(templateDir)) {
+        return res
+          .status(500)
+          .send(`Template for ${language.toUpperCase()} does not exist.`);
       }
 
+      // Ensure temp directory exists
+      if (!fs.existsSync(this.tempDir)) {
+        fs.mkdirSync(this.tempDir, { recursive: true });
+      }
+
+      // Prepare new app directory
       const uniqueAppName = `${appName}-${uuidv4()}`;
       const appDir = path.join(this.tempDir, uniqueAppName);
 
+      // Remove existing app dir if it exists
       if (fs.existsSync(appDir)) {
         fs.rmSync(appDir, { recursive: true, force: true });
       }
 
-      await runCommand(
-        `npx create-next-app@latest ${uniqueAppName} --ts --use-npm --skip-install --eslint --app --src-dir --no-tailwind --import-alias "@/src/*" --turbo --yes`,
-        this.tempDir,
-      );
+      // Copy pre-installed template to appDir
+      await fs.promises.cp(templateDir, appDir, { recursive: true });
 
+      // Add custom structure
       addNewFoldersAndFiles(structure, appDir);
 
+      // Update dependencies
       updatePackageJson(appDir, dependencies);
 
+      // Zip and return
       await createZipArchive(appDir, this.tempDir, uniqueAppName, res);
-
     } catch (error) {
       console.error('Error creating Next.js app:', error);
       res.status(500).send('Error creating Next.js app');

@@ -10,6 +10,7 @@ import {
   createZipArchive,
 } from '../shared/utils/common.utils';
 import { Response } from 'express';
+import { sendBadRequest } from '../shared/utils/response.utils';
 
 @Injectable()
 export class ExpressAppService {
@@ -24,35 +25,19 @@ export class ExpressAppService {
 
   async fetchStructure(appName: string) {
     try {
-      if (!fs.existsSync(this.tempDir)) {
-        fs.mkdirSync(this.tempDir);
+      const templateBaseDir = path.resolve(
+        __dirname,
+        '../../../..',
+        'express-templates',
+      );
+
+      const templateDir = path.join(templateBaseDir, 'express-template');
+
+      if (!fs.existsSync(templateDir)) {
+        return sendBadRequest(`Template for does not exist.`);
       }
 
-      const uniqueAppName = `${appName}-${uuidv4()}`;
-      const appDir = path.join(this.tempDir, uniqueAppName);
-
-      if (fs.existsSync(appDir)) {
-        fs.rmSync(appDir, { recursive: true, force: true });
-      }
-
-      await runCommand(`npx express-generator ${uniqueAppName}`, this.tempDir);
-
-      const appPath = path.join(this.tempDir, uniqueAppName);
-      const folderStructure = generateStructure(appPath);
-
-      if (fs.existsSync(appDir)) {
-        fs.rmSync(appDir, { recursive: true, force: true });
-      }
-
-      const outputDir = 'src/modules/shared/structures';
-      const outputPath = path.join(outputDir, 'folderStructureExpress.json');
-
-      if (!fs.existsSync(outputDir)) {
-        fs.mkdirSync(outputDir, { recursive: true });
-      }
-
-      fs.writeFileSync(outputPath, JSON.stringify(folderStructure, null, 2));
-
+      const folderStructure = generateStructure(templateDir);
       return folderStructure;
     } catch (error) {
       console.error('Error fetching structure:', error);
@@ -67,23 +52,27 @@ export class ExpressAppService {
     appName: string,
   ) {
     try {
-      const uniqueAppName = `${appName}-${uuidv4()}`;
-      const appDir = path.join(this.tempDir, uniqueAppName);
-
-      if (fs.existsSync(appDir)) {
-        fs.rmSync(appDir, { recursive: true, force: true });
+      const templateBaseDir = path.resolve(
+        __dirname,
+        '../../../..',
+        'express-templates',
+      );
+      const templateDir = path.join(templateBaseDir, 'express-ts-template');
+      if (!fs.existsSync(templateDir)) {
+        return res.status(500).send(`Template for does not exist.`);
       }
-
       if (!fs.existsSync(this.tempDir)) {
         fs.mkdirSync(this.tempDir);
       }
-
+      const uniqueAppName = `${appName}-${uuidv4()}`;
+      const appDir = path.join(this.tempDir, uniqueAppName);
+      if (fs.existsSync(appDir)) {
+        fs.rmSync(appDir, { recursive: true, force: true });
+      }
       await runCommand(`npx express-generator ${uniqueAppName}`, this.tempDir);
-
+      await fs.promises.cp(templateDir, appDir, { recursive: true });
       addNewFoldersAndFiles(structure, appDir);
-
       updatePackageJson(appDir, dependencies);
-
       await createZipArchive(appDir, this.tempDir, uniqueAppName, res);
     } catch (error) {
       console.error('Error creating Express.js app:', error);

@@ -19,12 +19,14 @@ export class AngularAppController {
     @Body('packageJson') dependencies: { name: string; version: string }[],
     @Body('appName') appName: string,
     @Res() res: any,
+    @Body('language') language: 'js' | 'ts' = 'ts',
   ) {
     return this.angularAppService.createAngularApp(
       structure,
       dependencies,
       res,
       appName,
+      language,
     );
   }
 

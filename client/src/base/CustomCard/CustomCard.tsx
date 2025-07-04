@@ -1,56 +1,56 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { CustomCardProps } from '../../utlis/Interfaces/Interface';
-
+import { HiArrowRight } from 'react-icons/hi';
 
 const CustomCard: React.FC<CustomCardProps> = ({ frameWork }) => {
-
     const navigate = useNavigate();
 
     return (
-        <div>
-            <div className="relative flex w-full max-w-[26rem] flex-col rounded-xl bg-slate-300 bg-clip-border text-gray-700 shadow-lg">
-                <div
-                    className="relative mx-4 mt-4 overflow-hidden text-white shadow-lg rounded-xl bg-blue-gray-500 bg-clip-border shadow-blue-gray-500/40">
-                    <img
-                        src={frameWork.image}
-                        alt={frameWork.alt}
-                    />
-                    <div
-                        className="absolute inset-0 w-full h-full to-bg-black-10 bg-gradient-to-tr from-transparent via-transparent to-black/60">
-                    </div>
-                </div>
-                <div className="p-6">
-                    <div className="flex items-center justify-between mb-3">
-                        <h5 className="block font-sans text-xl antialiased font-medium leading-snug tracking-normal text-blue-gray-900">
-                            {frameWork.name}
-                        </h5>
-                    </div>
-                    <p className="block font-sans text-base antialiased font-light leading-relaxed text-gray-700">
-                        {frameWork.description}
-                    </p>
-
-                    {/* Displaying the icons with tooltips */}
-                    <div className="flex flex-wrap gap-4 mt-4">
-                        {frameWork.services.map((service, index) => (
-                            <div key={index} className="text-2xl text-gray-700" title={service.name}>
-                                {service.icon}
-                            </div>
-                        ))}
-                    </div>
-
-                </div>
-                <div className="p-6 pt-3">
-                    <button
-                        className="block w-full select-none rounded-lg bg-gray-900 py-3.5 px-7 text-center align-middle font-sans text-sm font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                        type="button"
-                        onClick={() => navigate(frameWork.link)}
-                    >
-                        Build
-                    </button>
+        <motion.div 
+            whileHover={{ 
+                y: -5, 
+                boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)" 
+            }}
+            className="bg-card-bg rounded-xl overflow-hidden border border-gray-800 h-full flex flex-col"
+        >
+            <div className="p-4 flex items-center justify-center bg-darker">
+                <img 
+                    src={frameWork.image} 
+                    alt={frameWork.alt} 
+                    className="h-24 object-contain" 
+                />
+            </div>
+            
+            <div className="p-6 flex-grow">
+                <h3 className="text-2xl font-bold mb-2 text-white">{frameWork.name}</h3>
+                <p className="text-gray-400 mb-4">{frameWork.description}</p>
+                
+                <div className="flex flex-wrap gap-3 mb-6">
+                    {frameWork.services.map((service, index) => (
+                        <div 
+                            key={index} 
+                            className="flex items-center gap-1 bg-darker px-3 py-1.5 rounded-full text-sm"
+                            title={service.name}
+                        >
+                            <span className="text-primary">{service.icon}</span>
+                            <span className="text-gray-300">{service.name}</span>
+                        </div>
+                    ))}
                 </div>
             </div>
-        </div>
+            
+            <div className="p-6 border-t border-gray-800">
+                <button
+                    onClick={() => navigate(frameWork.link)}
+                    className="w-full bg-primary hover:bg-primary-hover text-white font-medium py-2.5 px-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 group"
+                >
+                    <span>Start Building</span>
+                    <HiArrowRight className="group-hover:translate-x-1 transition-transform" />
+                </button>
+            </div>
+        </motion.div>
     );
 };
 

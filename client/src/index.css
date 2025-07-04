@@ -2,7 +2,111 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --primary: #6366f1;
+  --primary-hover: #4f46e5;
+  --secondary: #14b8a6;
+  --secondary-hover: #0d9488;
+  --dark: #1e1e1e;
+  --darker: #171717;
+  --light-text: #f9fafb;
+  --muted-text: #9ca3af;
+  --card-bg: #262626;
+  --card-hover: #303030;
+  --transition: all 0.3s ease;
+}
+
 * {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--dark);
+  color: var(--light-text);
+  font-family: 'Inter', sans-serif;
+}
+
+.page-container {
+  min-height: calc(100vh - 160px); /* Accounting for header and footer */
+  padding: 2rem 1rem;
+}
+
+@media (min-width: 768px) {
+  .page-container {
+    padding: 3rem 2rem;
+  }
+}
+
+.page-title {
+  @apply text-3xl md:text-5xl font-bold text-center mb-6;
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.page-subtitle {
+  @apply text-lg md:text-xl text-center mb-10 text-muted-text max-w-3xl mx-auto;
+}
+
+.btn {
+  @apply px-6 py-3 rounded-lg font-medium transition-all duration-300 inline-block;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.3);
+}
+
+.btn-secondary {
+  background-color: var(--secondary);
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: var(--secondary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(20, 184, 166, 0.3);
+}
+
+.card {
+  @apply bg-card-bg rounded-xl overflow-hidden transition-all duration-300;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.card:hover {
+  @apply shadow-xl;
+  border-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-5px);
+}
+
+.input {
+  @apply w-full px-4 py-3 bg-darker rounded-lg border border-gray-700 text-light-text focus:outline-none focus:ring-2 focus:ring-primary;
+}
+
+.select {
+  @apply w-full px-4 py-3 bg-darker rounded-lg border border-gray-700 text-light-text focus:outline-none focus:ring-2 focus:ring-primary;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
 }

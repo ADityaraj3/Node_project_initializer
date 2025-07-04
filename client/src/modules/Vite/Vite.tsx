@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import FolderStructure from '../../base/FolderStructure/FolderStructure';
 import { Node, PackageJson } from '../../utlis/Interfaces/Interface';
 import { addNpmPackage, handleAddDirectory, handleDeleteDirectory, handleDeletePackage, searchNpmPackages, handleSaveStructureProject, fetchStructureProjectVite } from '../../utlis/common/common.utils';
 import CustomLoader from '../../base/CustomLoader/CustomLoader';
+import CustomSelect from '../../base/CustomSelect/CustomSelect';
 
 const Vite: React.FC = () => {
     const [structure, setStructure] = useState<Node | null>(null);
@@ -13,6 +15,7 @@ const Vite: React.FC = () => {
     const [framework, setFramework] = useState<string>('vanilla');
     const [language, setLanguage] = useState<string>('javascript');
     const [loading, setLoading] = useState<boolean>(false);
+
     const fetchStructure = async () => {
         try {
             setLoading(true);
@@ -48,118 +51,177 @@ const Vite: React.FC = () => {
         return () => clearTimeout(delayDebounceFn);
     }, [searchQuery]);
 
+    const fadeIn = {
+        hidden: { opacity: 0, y: 20 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+    };
+
     return (
-        <div className="bg-[#1e1e1e] min-h-screen">
-            <div className="flex justify-center items-center py-10">
-                <h1 className="text-white tracking-wide text-center text-2xl sm:text-5xl font-extrabold font-serif">
-                    Vite App Folder Structure
+        <div className="bg-dark min-h-screen pt-20 px-4 sm:px-6 lg:px-8">
+            <motion.div
+                className="max-w-7xl mx-auto"
+                initial="hidden"
+                animate="visible"
+                variants={fadeIn}
+            >
+                <h1 className="text-3xl md:text-5xl font-bold text-center mb-10">
+                    <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                        Vite App Configurator
+                    </span>
                 </h1>
-            </div>
-            {loading ? (
-                <div className="flex justify-center items-center min-h-screen">
-                    <CustomLoader />
-                </div>
-            ) : (
-                <div className="pt-6 px-4 md:px-8 overflow-x-hidden">
-                    <h2 className="text-white text-xl mb-4 mx-4">Customize Your Project</h2>
-                    <div className="mb-6 flex flex-col md:flex-row items-start md:items-center">
-                        <label className="text-white mb-2 md:mb-0 md:ml-4">
-                            Framework:
-                            <select
-                                value={framework}
-                                onChange={(e) => setFramework(e.target.value)}
-                                className="mx-2 px-2 py-1 text-black rounded-md mt-2 md:mt-0 w-full md:w-auto"
-                            >
-                                <option value="vanilla">Vanilla</option>
-                                <option value="vue">Vue</option>
-                                <option value="react-swc">React SWC</option>
-                                <option value="preact">Preact</option>
-                                <option value="lit">Lit</option>
-                                <option value="svelte">Svelte</option>
-                                <option value="solid">Solid</option>
-                                <option value="qwik">Qwik</option>
-                            </select>
-                        </label>
-                        <label className="text-white mb-2 md:mb-0 md:ml-4">
-                            Language:
-                            <select
-                                value={language}
-                                onChange={(e) => setLanguage(e.target.value)}
-                                className="ml-2 px-2 py-1 text-black rounded-md mt-2 md:mt-0 w-full md:w-auto"
-                            >
-                                <option value="javascript">JavaScript</option>
-                                <option value="typescript">TypeScript</option>
-                            </select>
-                        </label>
-                        <button
-                            onClick={fetchStructure}
-                            className="mt-4 md:mt-0 ml-0 md:ml-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 whitespace-nowrap w-full md:w-auto"
-                        >
-                            Fetch Structure
-                        </button>
+
+                {loading ? (
+                    <div className="flex justify-center items-center py-20">
+                        <CustomLoader />
                     </div>
-                    {structure ? (
-                        <>
-                            <FolderStructure
-                                structure={structure}
-                                onAddDirectory={(node) => handleAddDirectory(node, setStructure)}
-                                onDeleteDirectory={(node) => handleDeleteDirectory(node, setStructure)}
-                            />
-                            <div className="mt-6">
-                                <div className="flex flex-col md:flex-row md:items-center gap-3">
-                                    <input
-                                        type="text"
-                                        placeholder="Search NPM packages"
-                                        value={searchQuery}
-                                        onChange={(e) => setSearchQuery(e.target.value)}
-                                        className="w-full md:w-72 px-2 py-1 rounded-md mb-4 md:mb-0"
-                                    />
-                                    <select
-                                        onChange={(e) => addNpmPackage(e.target.value, setPackageJson, setSelectedPackage)}
-                                        className="w-full md:w-72 px-2 py-1 rounded-md"
+                ) : (
+                    <div className="mt-6">
+                        <motion.div
+                            className="bg-card-bg rounded-xl p-6 mb-8 border border-gray-800"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.2 }}
+                        >
+                            <h2 className="text-xl font-semibold mb-4">Framework Settings</h2>
+                            <div className="grid md:grid-cols-3 gap-6">
+                                <CustomSelect
+                                    label="Framework"
+                                    value={framework}
+                                    onChange={(e) => setFramework(e.target.value)}
+                                    options={[
+                                        { label: 'Vanilla', value: 'vanilla' },
+                                        { label: 'Vue', value: 'vue' },
+                                        { label: 'React SWC', value: 'react-swc' },
+                                        { label: 'Preact', value: 'preact' },
+                                        { label: 'Lit', value: 'lit' },
+                                        { label: 'Svelte', value: 'svelte' },
+                                        { label: 'Solid', value: 'solid' },
+                                        { label: 'Qwik', value: 'qwik' },
+                                    ]}
+                                />
+                                <CustomSelect
+                                    label="Language"
+                                    value={language}
+                                    onChange={(e) => setLanguage(e.target.value)}
+                                    options={[
+                                        { label: 'JavaScript', value: 'javascript' },
+                                        { label: 'TypeScript', value: 'typescript' },
+                                    ]}
+                                />
+                                <div className="flex items-end">
+                                    <button
+                                        onClick={fetchStructure}
+                                        className="btn btn-primary w-full"
                                     >
-                                        <option value="">Select Searched NPM Package</option>
-                                        {npmPackages.map((pkg) => (
-                                            <option key={pkg} value={pkg}>
-                                                {pkg}
-                                            </option>
-                                        ))}
-                                    </select>
+                                        Refresh Structure
+                                    </button>
                                 </div>
                             </div>
-    
-                            <div className="mt-6">
-                                <h3 className="text-white text-lg mb-2">Added Packages:</h3>
-                                <div className="flex flex-wrap gap-2">
-                                    {packageJson.map((pkg) => (
-                                        <div key={pkg.name} className="flex items-center bg-gray-700 text-white rounded-md px-3 py-2">
-                                            <span>{pkg.name} ({pkg.version})</span>
-                                            <button
-                                                onClick={() => handleDeletePackage(pkg.name, setPackageJson)}
-                                                className="ml-2 text-red-500 hover:text-red-700"
-                                            >
-                                                &times;
-                                            </button>
+                        </motion.div>
+
+                        {structure ? (
+                            <div className="grid lg:grid-cols-3 gap-8">
+                                <motion.div
+                                    className="lg:col-span-2 bg-card-bg rounded-xl p-6 border border-gray-800"
+                                    initial={{ opacity: 0, x: -20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: 0.3 }}
+                                >
+                                    <h2 className="text-xl font-semibold mb-4">Folder Structure</h2>
+                                    <div className="bg-darker rounded-lg p-4 overflow-auto max-h-[500px]">
+                                        <FolderStructure
+                                            structure={structure}
+                                            onAddDirectory={(node) => handleAddDirectory(node, setStructure)}
+                                            onDeleteDirectory={(node) => handleDeleteDirectory(node, setStructure)}
+                                        />
+                                    </div>
+                                </motion.div>
+
+                                <motion.div
+                                    className="bg-card-bg rounded-xl p-6 border border-gray-800"
+                                    initial={{ opacity: 0, x: 20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: 0.4 }}
+                                >
+                                    <h2 className="text-xl font-semibold mb-4">Package Manager</h2>
+                                    <div className="space-y-4">
+                                        <div>
+                                            <label className="block text-gray-400 mb-2">Search NPM Packages</label>
+
+                                            {/* Search Input */}
+                                            <input
+                                                type="text"
+                                                placeholder="Search packages..."
+                                                value={searchQuery}
+                                                onChange={(e) => setSearchQuery(e.target.value)}
+                                                className="w-full px-4 py-2 mb-4 rounded-md bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                            />
+
+                                            {/* Select Dropdown */}
+                                            <CustomSelect
+                                                label="Search NPM Packages"
+                                                value=""
+                                                onChange={(e) =>
+                                                    addNpmPackage(e.target.value, setPackageJson, setSelectedPackage)
+                                                }
+                                                options={npmPackages.map((pkg) => ({ label: pkg, value: pkg }))}
+                                                placeholder="Select the searched package"
+                                            />
                                         </div>
-                                    ))}
-                                </div>
+                                        <div>
+                                            <h3 className="text-lg font-medium mb-2">Added Packages</h3>
+                                            <div className="bg-darker rounded-lg p-4 min-h-[200px] max-h-[300px] overflow-y-auto">
+                                                {packageJson.length > 0 ? (
+                                                    <div className="flex flex-wrap gap-2">
+                                                        {packageJson.map((pkg) => (
+                                                            <div key={pkg.name} className="flex items-center bg-card-bg rounded-md px-3 py-2">
+                                                                <span className="text-sm">
+                                                                    <span className="text-primary font-medium">{pkg.name}</span>
+                                                                    <span className="text-gray-500 ml-1">@{pkg.version}</span>
+                                                                </span>
+                                                                <button
+                                                                    onClick={() => handleDeletePackage(pkg.name, setPackageJson)}
+                                                                    className="ml-2 text-gray-400 hover:text-red-500"
+                                                                >
+                                                                    &times;
+                                                                </button>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                ) : (
+                                                    <p className="text-gray-500 text-center py-4">No packages added yet</p>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </motion.div>
                             </div>
-                            <button
-                                onClick={handleSaveStructure}
-                                className="mt-6 ml-0 md:ml-4 px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 w-full md:w-auto"
+                        ) : (
+                            <div className="text-center py-8">
+                                <p className="text-gray-400">Loading project structure...</p>
+                            </div>
+                        )}
+
+                        {structure && (
+                            <motion.div
+                                className="mt-8 text-center"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.5 }}
                             >
-                                Save Structure
-                            </button>
-                        </>
-                    ) : (
-                        <p className="text-white">Loading...</p>
-                    )}
-                </div>
-            )}
+                                <button
+                                    onClick={handleSaveStructure}
+                                    className="btn btn-secondary px-8 py-3 text-lg shadow-xl"
+                                >
+                                    Generate Project
+                                </button>
+                            </motion.div>
+                        )}
+                    </div>
+                )}
+            </motion.div>
         </div>
     );
-    
+};
 
-}
-
-export default Vite
+export default Vite;

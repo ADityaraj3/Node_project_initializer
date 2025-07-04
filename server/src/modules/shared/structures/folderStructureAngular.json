@@ -1,5 +1,5 @@
 {
-  "name": "my-angular-app",
+  "name": "undefined-85414769-abc3-488f-9bdf-6326a6b4b996",
   "type": "directory",
   "children": [
     {
@@ -27,7 +27,7 @@
           "type": "file"
         }
       ],
-      "id": ".vscode1730515268707"
+      "id": ".vscode1749985259008"
     },
     {
       "name": "README.md",
@@ -50,7 +50,7 @@
           "type": "file"
         }
       ],
-      "id": "public1730515268707"
+      "id": "public1749985259008"
     },
     {
       "name": "src",
@@ -85,7 +85,7 @@
               "type": "file"
             }
           ],
-          "id": "app1730515268707"
+          "id": "app1749985259008"
         },
         {
           "name": "index.html",
@@ -100,7 +100,7 @@
           "type": "file"
         }
       ],
-      "id": "src1730515268707"
+      "id": "src1749985259008"
     },
     {
       "name": "tsconfig.app.json",
@@ -115,5 +115,5 @@
       "type": "file"
     }
   ],
-  "id": "my-angular-app-1313f9b1-009c-4324-b175-4d9dc6455d391730515268707"
+  "id": "undefined-85414769-abc3-488f-9bdf-6326a6b4b9961749985259008"
 }

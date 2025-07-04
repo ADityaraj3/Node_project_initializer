@@ -24,6 +24,17 @@ export class ViteAppService {
     res: any,
   ) {
     try {
+      if (framework.includes('react-swc')) {
+        await this.createViteAppCachedForReact(
+          structure,
+          dependencies,
+          appName,
+          framework,
+          res,
+        );
+        return;
+      }
+
       const uniqueAppName = `${appName}-${uuidv4()}`;
       const appDir = path.join(this.tempDir, uniqueAppName);
       if (fs.existsSync(appDir)) {
@@ -96,6 +107,61 @@ export class ViteAppService {
     } catch (error) {
       console.error('Error fetching structure:', error);
       res.status(500).send('Error fetching structure');
+    }
+  }
+
+  async createViteAppCachedForReact(
+    structure: Node,
+    dependencies: { name: string; version: string }[],
+    appName: string,
+    framework: string,
+    res: any,
+  ) {
+    try {
+      const templateBaseDir = path.resolve(
+        __dirname,
+        '../../../..',
+        'react-templates',
+      );
+
+      const templateDir = path.join(
+        templateBaseDir,
+        framework === 'react-ts' ? 'react-ts-template' : 'react-js-template',
+      );
+
+      if (!fs.existsSync(templateDir)) {
+        return res
+          .status(500)
+          .send(`Template for ${framework.toUpperCase()} does not exist.`);
+      }
+
+      // Ensure temp directory exists
+      if (!fs.existsSync(this.tempDir)) {
+        fs.mkdirSync(this.tempDir, { recursive: true });
+      }
+
+      // Prepare new app directory
+      const uniqueAppName = `${appName}-${uuidv4()}`;
+
+      const appDir = path.join(this.tempDir, uniqueAppName);
+      if (fs.existsSync(appDir)) {
+        fs.rmSync(appDir, { recursive: true, force: true });
+      }
+
+      // Copy pre-installed template to appDir
+      await fs.promises.cp(templateDir, appDir, { recursive: true });
+
+      // Add custom structure
+      addNewFoldersAndFiles(structure, appDir);
+
+      // Update dependencies
+      updatePackageJson(appDir, dependencies);
+
+      // Zip and return
+      await createZipArchive(appDir, this.tempDir, uniqueAppName, res);
+    } catch (error) {
+      console.error('Error creating Vite app:', error);
+      res.status(500).send('Error creating Vite app');
     }
   }
 }

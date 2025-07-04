@@ -143,6 +143,129 @@ export const fetchStructureProjectVite = async (
     }
 }
 
+export const fetchStructureProjectNext = async (
+    url: string,
+    body: any,
+    setStructure: React.Dispatch<React.SetStateAction<Node | null>>
+) => {
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch the structure');
+        }
+
+        const data = await response.json();
+        const updatedStructure = {
+            ...data,
+            name: 'my-next-app',
+        };
+
+        setStructure(updatedStructure);
+    } catch (error) {
+        console.error('Error fetching structure:', error);
+        setStructure({ name: 'root', type: 'directory', children: [], deletable: false, id: 'root' });
+    }
+}
+
+export const fetchStructureProjectNest = async (
+    url: string,
+    body: any,
+    setStructure: React.Dispatch<React.SetStateAction<Node | null>>
+) => {
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch the structure');
+        }
+
+        const data = await response.json();
+        const updatedStructure = {
+            ...data,
+            name: 'my-nest-app',
+        };
+
+        setStructure(updatedStructure);
+    } catch (error) {
+        console.error('Error fetching structure:', error);
+        setStructure({ name: 'root', type: 'directory', children: [], deletable: false, id: 'root' });
+    }
+}
+
+export const fetchStructureProjectExpress = async (
+    url: string,
+    body: any,
+    setStructure: React.Dispatch<React.SetStateAction<Node | null>>
+) => {
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch the structure');
+        }
+
+        const data = await response.json();
+        const updatedStructure = {
+            ...data,
+            name: 'my-express-app',
+        };
+
+        setStructure(updatedStructure);
+    } catch (error) {
+        console.error('Error fetching structure:', error);
+        setStructure({ name: 'root', type: 'directory', children: [], deletable: false, id: 'root' });
+    }
+}
+
+export const fetchStructureProjectAngular = async (
+    url: string,
+    body: any,
+    setStructure: React.Dispatch<React.SetStateAction<Node | null>>
+) => {
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch the structure');
+        }
+
+        const data = await response.json();
+        const updatedStructure = {
+            ...data,
+            name: 'my-angular-app',
+        };
+
+        setStructure(updatedStructure);
+    } catch (error) {
+        console.error('Error fetching structure:', error);
+        setStructure({ name: 'root', type: 'directory', children: [], deletable: false, id: 'root' });
+    }
+}
 
 export const handleSaveStructureProject = async (
     url: string,

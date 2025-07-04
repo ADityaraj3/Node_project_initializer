@@ -1,5 +1,5 @@
 {
-  "name": "my-nest-app",
+  "name": "undefined-f836d679-73f0-455e-9902-b3e412ebc288",
   "type": "directory",
   "children": [
     {
@@ -51,7 +51,7 @@
           "type": "file"
         }
       ],
-      "id": "src1730473138411"
+      "id": "src1749983842796"
     },
     {
       "name": "test",
@@ -66,7 +66,7 @@
           "type": "file"
         }
       ],
-      "id": "test1730473138411"
+      "id": "test1749983842796"
     },
     {
       "name": "tsconfig.build.json",
@@ -77,5 +77,5 @@
       "type": "file"
     }
   ],
-  "id": "my-nest-app-5aba1471-0b71-4125-a5dd-b3011fb098aa1730473138411"
+  "id": "undefined-f836d679-73f0-455e-9902-b3e412ebc2881749983842795"
 }

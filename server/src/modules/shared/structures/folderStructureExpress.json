@@ -1,5 +1,5 @@
 {
-  "name": "my-express-app",
+  "name": "undefined-10a55ab5-29c5-40ef-b173-be6b6d10d8dd",
   "type": "directory",
   "children": [
     {
@@ -15,7 +15,7 @@
           "type": "file"
         }
       ],
-      "id": "bin1730515252920"
+      "id": "bin1749984651451"
     },
     {
       "name": "package.json",
@@ -29,13 +29,13 @@
           "name": "images",
           "type": "directory",
           "children": [],
-          "id": "images1730515252920"
+          "id": "images1749984651451"
         },
         {
           "name": "javascripts",
           "type": "directory",
           "children": [],
-          "id": "javascripts1730515252920"
+          "id": "javascripts1749984651451"
         },
         {
           "name": "stylesheets",
@@ -46,10 +46,10 @@
               "type": "file"
             }
           ],
-          "id": "stylesheets1730515252920"
+          "id": "stylesheets1749984651451"
         }
       ],
-      "id": "public1730515252920"
+      "id": "public1749984651451"
     },
     {
       "name": "routes",
@@ -64,7 +64,7 @@
           "type": "file"
         }
       ],
-      "id": "routes1730515252920"
+      "id": "routes1749984651451"
     },
     {
       "name": "views",
@@ -83,8 +83,8 @@
           "type": "file"
         }
       ],
-      "id": "views1730515252920"
+      "id": "views1749984651451"
     }
   ],
-  "id": "my-express-app-33dff4e3-f3e2-4781-b71e-eabdeb6a0b1a1730515252920"
+  "id": "undefined-10a55ab5-29c5-40ef-b173-be6b6d10d8dd1749984651451"
 }

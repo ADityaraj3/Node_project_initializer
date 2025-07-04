@@ -20,31 +20,41 @@ export class NestAppService {
     appName: string,
     res: any,
   ) {
-    const uniqueAppName = `${appName}-${uuidv4()}`;
-    const appDir = path.join(this.tempDir, uniqueAppName);
-
     try {
+      const templateBaseDir = path.resolve(
+        __dirname,
+        '../../../..',
+        'nest-templates',
+      );
+
+      const templateDir = path.join(templateBaseDir, 'nest-ts-template');
+
+      if (!fs.existsSync(templateDir)) {
+        return res.status(500).send(`Template for does not exist.`);
+      }
+
+      // Ensure temp directory exists
+      if (!fs.existsSync(this.tempDir)) {
+        fs.mkdirSync(this.tempDir, { recursive: true });
+      }
+      // Prepare new app directory
+      const uniqueAppName = `${appName}-${uuidv4()}`;
+      const appDir = path.join(this.tempDir, uniqueAppName);
+
       if (fs.existsSync(appDir)) {
         fs.rmSync(appDir, { recursive: true, force: true });
       }
 
-      if (!fs.existsSync(this.tempDir)) {
-        fs.mkdirSync(this.tempDir);
-      }
+      // Copy pre-installed template to appDir
+      await fs.promises.cp(templateDir, appDir, { recursive: true });
 
-      await runCommand(`npm install -g @nestjs/cli`, this.tempDir);
+      // Add custom structure
+      addNewFoldersAndFiles(structure, appDir);
 
-      await runCommand(
-        `nest new ${uniqueAppName} --skip-git --package-manager=npm`,
-        this.tempDir,
-      );
-
+      // Update dependencies
       updatePackageJson(appDir, dependencies);
 
-      if (structure) {
-        addNewFoldersAndFiles(structure, appDir);
-      }
-
+      // Zip and return
       await createZipArchive(appDir, this.tempDir, uniqueAppName, res);
     } catch (error) {
       console.error('Error creating NestJS app:', error);
@@ -53,46 +63,21 @@ export class NestAppService {
   }
 
   async fetchStructure(appName: string, res: any) {
-    const uniqueAppName = `${appName}-${uuidv4()}`;
-    const appDir = path.join(this.tempDir, uniqueAppName);
-
     try {
-      if (fs.existsSync(appDir)) {
-        fs.rmSync(appDir, { recursive: true, force: true });
-      }
-
-      if (!fs.existsSync(this.tempDir)) {
-        fs.mkdirSync(this.tempDir);
-      }
-
-      await runCommand(
-        `nest new ${uniqueAppName} --skip-git --package-manager=npm`,
-        this.tempDir,
+      const templateBaseDir = path.resolve(
+        __dirname,
+        '../../../..',
+        'nest-templates',
       );
 
-      const appPath = path.join(this.tempDir, uniqueAppName);
+      const templateDir = path.join(templateBaseDir, 'nest-ts-template');
 
-      while (!fs.existsSync(appPath)) {
-        await runCommand(
-          `nest new ${uniqueAppName} --skip-git --package-manager=npm`,
-          this.tempDir,
-        );
-      }
-      const folderStructure = generateStructure(appPath);
-      const outputDir = 'src/modules/shared/structures';
-      const outputPath = path.join(outputDir, 'folderStructureNest.json');
-
-      if (!fs.existsSync(outputDir)) {
-        fs.mkdirSync(outputDir, { recursive: true });
+      if (!fs.existsSync(templateDir)) {
+        return res.status(500).send(`Template for does not exist.`);
       }
 
-      fs.writeFileSync(outputPath, JSON.stringify(folderStructure, null, 2));
-
+      const folderStructure = generateStructure(templateDir);
       res.json(folderStructure);
-
-      if (fs.existsSync(appDir)) {
-        fs.rmSync(appDir, { recursive: true, force: true });
-      }
     } catch (error) {
       console.error('Error fetching structure:', error);
       res.status(500).send('Error fetching structure');

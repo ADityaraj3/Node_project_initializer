@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface CustomPopupProps {
   isOpen: boolean;
@@ -17,42 +18,71 @@ const CustomPopup: React.FC<CustomPopupProps> = ({
   onConfirm,
   onCancel,
 }) => {
-  const [inputValue, setInputValue] = React.useState('');
-
-  if (!isOpen) return null;
+  const [inputValue, setInputValue] = useState('');
+  
+  // Reset input value when modal closes
+  useEffect(() => {
+    if (!isOpen) {
+      setInputValue('');
+    }
+  }, [isOpen]);
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-gray-800 text-white rounded-md shadow-md w-1/3 p-5">
-        <h2 className="text-lg font-bold">{title}</h2>
-        {description && <p className="my-3">{description}</p>}
-        {inputLabel && (
-          <div className="my-4">
-            <label className="block mb-2">{inputLabel}</label>
-            <input
-              type="text"
-              className="w-full p-2 bg-gray-700 rounded-md text-white border border-gray-600"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-            />
-          </div>
-        )}
-        <div className="flex justify-end gap-4">
-          <button
-            className="bg-gray-600 hover:bg-gray-500 text-white px-4 py-2 rounded-md"
-            onClick={onCancel}
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+          onClick={onCancel}
+        >
+          <motion.div
+            initial={{ scale: 0.95, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.95, opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="bg-card-bg rounded-xl shadow-2xl w-full max-w-md p-6 border border-gray-800"
+            onClick={(e) => e.stopPropagation()}
           >
-            Cancel
-          </button>
-          <button
-            className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-md"
-            onClick={() => onConfirm(inputValue)}
-          >
-            Confirm
-          </button>
-        </div>
-      </div>
-    </div>
+            <h2 className="text-xl font-semibold mb-2">{title}</h2>
+            
+            {description && (
+              <p className="text-gray-400 mb-4">{description}</p>
+            )}
+            
+            {inputLabel && (
+              <div className="mb-6">
+                <label className="block text-gray-300 mb-2">{inputLabel}</label>
+                <input
+                  type="text"
+                  className="input"
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  autoFocus
+                />
+              </div>
+            )}
+            
+            <div className="flex justify-end gap-3">
+              <button
+                className="px-4 py-2 rounded-lg bg-gray-700 text-gray-300 hover:bg-gray-600 transition-colors"
+                onClick={onCancel}
+              >
+                Cancel
+              </button>
+              <button
+                className="px-4 py-2 rounded-lg bg-primary text-white hover:bg-primary-hover transition-colors"
+                onClick={() => onConfirm(inputValue)}
+              >
+                Confirm
+              </button>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 

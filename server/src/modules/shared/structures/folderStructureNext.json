@@ -1,17 +1,17 @@
 {
-  "name": "my-next-app",
+  "name": "undefined-6e0cc629-e83f-49b1-b1ea-2b91d093f932",
   "type": "directory",
   "children": [
-    {
-      "name": ".eslintrc.json",
-      "type": "file"
-    },
     {
       "name": ".gitignore",
       "type": "file"
     },
     {
       "name": "README.md",
+      "type": "file"
+    },
+    {
+      "name": "eslint.config.mjs",
       "type": "file"
     },
     {
@@ -51,7 +51,7 @@
           "type": "file"
         }
       ],
-      "id": "public1730514609275"
+      "id": "public1749985039733"
     },
     {
       "name": "src",
@@ -64,21 +64,6 @@
             {
               "name": "favicon.ico",
               "type": "file"
-            },
-            {
-              "name": "fonts",
-              "type": "directory",
-              "children": [
-                {
-                  "name": "GeistMonoVF.woff",
-                  "type": "file"
-                },
-                {
-                  "name": "GeistVF.woff",
-                  "type": "file"
-                }
-              ],
-              "id": "fonts1730514609275"
             },
             {
               "name": "globals.css",
@@ -97,15 +82,15 @@
               "type": "file"
             }
           ],
-          "id": "app1730514609275"
+          "id": "app1749985039733"
         }
       ],
-      "id": "src1730514609275"
+      "id": "src1749985039733"
     },
     {
       "name": "tsconfig.json",
       "type": "file"
     }
   ],
-  "id": "my-next-app-08a73bc4-c464-438d-849d-d44272bd09161730514609274"
+  "id": "undefined-6e0cc629-e83f-49b1-b1ea-2b91d093f9321749985039733"
 }

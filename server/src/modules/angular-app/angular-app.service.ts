@@ -20,41 +20,17 @@ export class AngularAppService {
 
   async fetchAngularStructure(appName: string, res: any) {
     try {
-      const uniqueAppName = `${appName}-${uuidv4()}`;
-      const appDir = path.join(this.tempDir, uniqueAppName);
+      const templateBaseDir = path.resolve(
+        __dirname,
+        '../../../..',
+        'angular-templates',
+      )
 
-      if (fs.existsSync(appDir)) {
-        fs.rmSync(appDir, { recursive: true, force: true });
-      }
+      const templateDir = path.join(templateBaseDir, 'angular-template');
 
-      if (!fs.existsSync(this.tempDir)) {
-        fs.mkdirSync(this.tempDir);
-      }
-
-      await runCommand(`npm install @angular/cli`, this.tempDir);
-
-      await runCommand(
-        `npx @angular/cli new ${uniqueAppName} --routing --style=scss --skip-install`,
-        this.tempDir,
-      );
-
-      const appPath = path.join(this.tempDir, uniqueAppName);
-      const folderStructure = generateStructure(appPath);
-
-      const outputDir = 'src/modules/shared/structures';
-      const outputPath = path.join(outputDir, 'folderStructureAngular.json');
-
-      if (!fs.existsSync(outputDir)) {
-        fs.mkdirSync(outputDir, { recursive: true });
-      }
-
-      fs.writeFileSync(outputPath, JSON.stringify(folderStructure, null, 2));
+      const folderStructure = generateStructure(templateDir);
 
       res.json(folderStructure);
-
-      if (fs.existsSync(appDir)) {
-        fs.rmSync(appDir, { recursive: true, force: true });
-      }
     } catch (error) {
       console.error('Error fetching structure:', error);
       res.status(500).send('Error fetching structure');
@@ -66,30 +42,33 @@ export class AngularAppService {
     dependencies: { name: string; version: string }[],
     res: any,
     appName: string,
+    language: 'js' | 'ts' = 'ts',
   ) {
     try {
+      const templateBaseDir = path.resolve(
+        __dirname,
+        '../../../..',
+        'angular-templates',
+      );
+      const templateDir = path.join(templateBaseDir, 'angular-template');
+      if (!fs.existsSync(templateDir)) {
+        return res.status(500).send(`Template for does not exist.`);
+      }
+      if (!fs.existsSync(this.tempDir)) {
+        fs.mkdirSync(this.tempDir, { recursive: true });
+      }
+
       const uniqueAppName = `${appName}-${uuidv4()}`;
       const appDir = path.join(this.tempDir, uniqueAppName);
       if (fs.existsSync(appDir)) {
         fs.rmSync(appDir, { recursive: true, force: true });
       }
-
-      if (!fs.existsSync(this.tempDir)) {
-        fs.mkdirSync(this.tempDir);
-      }
-
-      await runCommand(`npm install @angular/cli`, this.tempDir);
-
-      await runCommand(
-        `npx @angular/cli new ${uniqueAppName} --routing --style=scss --skip-install`,
-        this.tempDir,
-      );
-
+      fs.cpSync(templateDir, appDir, { recursive: true });
       addNewFoldersAndFiles(structure, appDir);
-
       updatePackageJson(appDir, dependencies);
-
       await createZipArchive(appDir, this.tempDir, uniqueAppName, res);
+      // Clean up: Remove the temporary directory after zipping
+      fs.rmSync(this.tempDir, { recursive: true, force: true });
     } catch (error) {
       console.error('Error creating Angular app:', error);
       res.status(500).send('Error creating Angular app');

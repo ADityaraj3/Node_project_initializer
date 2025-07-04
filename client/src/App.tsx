@@ -4,17 +4,26 @@ import AppRoutes from "./routes";
 import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
- 
   return (
-    <>
-          <BrowserRouter>
-            <ToastContainer autoClose={3000} />
-            <AppRoutes />
-          </BrowserRouter>
-
-    </>
-
-
+    <BrowserRouter>
+      <ToastContainer 
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        toastStyle={{ 
+          backgroundColor: '#262626',
+          borderLeft: '4px solid #6366f1'
+        }}
+      />
+      <AppRoutes />
+    </BrowserRouter>
   );
 }
 

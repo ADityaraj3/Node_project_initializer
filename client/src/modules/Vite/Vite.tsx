@@ -36,7 +36,7 @@ const Vite: React.FC = () => {
             structure: structure,
             packageJson: packageJson,
             framework: finalFramework,
-        }, "vite-app", setLoading);
+        }, "vite-app");
     };
 
     useEffect(() => {

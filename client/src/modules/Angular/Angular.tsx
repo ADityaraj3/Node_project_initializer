@@ -30,7 +30,7 @@ const Angular: React.FC = () => {
         await handleSaveStructureProject('http://localhost:3003/angular-app/create', {
             structure: structure,
             packageJson: packageJson,
-        }, "angular-app", setLoading);
+        }, "angular-app");
     };
 
     useEffect(() => {

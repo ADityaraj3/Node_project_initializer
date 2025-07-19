@@ -30,7 +30,7 @@ const Nest: React.FC = () => {
         await handleSaveStructureProject('http://localhost:3003/nest-app/create', {
             structure: structure,
             packageJson: packageJson,
-        }, "nest-app", setLoading);
+        }, "nest-app");
     };
 
     useEffect(() => {

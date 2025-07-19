@@ -33,7 +33,7 @@ const Next: React.FC = () => {
             structure: structure,
             packageJson: packageJson,
             language
-        }, "next-app", setLoading);
+        }, "next-app");
     };
 
     useEffect(() => {

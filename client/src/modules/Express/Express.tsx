@@ -30,7 +30,7 @@ const Express: React.FC = () => {
         await handleSaveStructureProject('http://localhost:3003/express-app/create', {
             structure: structure,
             packageJson: packageJson,
-        }, "express-app", setLoading);
+        }, "express-app");
     };
 
     useEffect(() => {

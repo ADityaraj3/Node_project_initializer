@@ -10,11 +10,11 @@ var validationFunctions = {
     if (!value) {
       return true;
     }
-    let length = validation.value || 0;
+    let length: any = validation.value || 0;
     if (Array.isArray(value)) {
       let allValuesValid = true;
       for (let val of value) {
-        if (length < value.length) {
+        if (length < val.length) {
           allValuesValid = false;
           break;
         }
@@ -37,11 +37,11 @@ var validationFunctions = {
     if (!value) {
       return true;
     }
-    let length = validation.value || 0;
+    let length: any = validation.value || 0;
     if (Array.isArray(value)) {
       let allValuesValid = true;
       for (let val of value) {
-        if (length > value.length) {
+        if (length > val.length) {
           allValuesValid = false;
           break;
         }
@@ -197,7 +197,7 @@ var validationFunctions = {
     value: string | number | string[],
     validation: ValidationObj
   ) => {
-    let length = validation.value || 0;
+    let length: any = validation.value || 0;
     const arr = value.toString().split(" ");
     const noOfWords = arr.filter((word) => word !== "").length;
 

@@ -271,7 +271,7 @@ export const handleSaveStructureProject = async (
     url: string,
     body: object,
     projectName: string,
-    setLoading: React.Dispatch<React.SetStateAction<boolean>>
+    // setLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
 
     const toastId = toast.info('Preparing your download, please wait...', {

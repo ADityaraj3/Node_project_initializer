@@ -1,9 +1,11 @@
 import axios from "axios";
-import { strings } from "../../../../Office_Projects/telekomsozial-internal-application-tool-frontend/src/constants/Strings";
+import { strings } from "../constants/Strings";
+
 // import { errorNotification } from "../Modules/Shared/Notifications/Notifications";
 import { clearCookie, getCookie } from "./cookieUtils";
-import { errorNotification } from "../../../../Office_Projects/telekomsozial-internal-application-tool-frontend/src/base/Notifications/Notifications";
-import { ACCESS_TOKEN, SELECTED_LANGUAGE } from "../../../../Office_Projects/telekomsozial-internal-application-tool-frontend/src/utils/enums/misc";
+import { errorNotification } from "../base/Notifications/Notifications";
+import { ACCESS_TOKEN } from "./enums/misc";
+
 
 // const {i18n} = useTranslation();
 
@@ -17,12 +19,10 @@ const instance = axios.create({
 instance.interceptors.request.use(
   (config: any) => {
     const accessToken = getCookie(ACCESS_TOKEN);
-    const language = getCookie(SELECTED_LANGUAGE)
 
     if (accessToken) {
       config.headers["Authorization"] = `${accessToken}`;
     }
-    config.headers["lang"] = language ? language : "de";
 
     return config;
   },

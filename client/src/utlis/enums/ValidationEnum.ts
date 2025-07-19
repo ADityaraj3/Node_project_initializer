@@ -1,6 +1,5 @@
-import { validationOptions } from "../../utils/interface";
 
-export const ValidationEnum : validationOptions = {
+export const ValidationEnum : any = {
   REQUIRED: 'Required',
   MAXLENGTH: 'MaxLength',
   MINLENGTH: 'MinLength',

@@ -1,12 +1,11 @@
-import { ValidationSet, ValidationObj } from "../../../../Office_Projects/telekomsozial-internal-application-tool-frontend/src/utils/interface";
-var validationFunctions = {
+var validationFunctions: any = {
   /**
    * @param {value} value the value that needs to be tested.
    * @param {value} length allowed length of the string.
    *
    * Returns true/false based on if the value length is not more than specified length.
    */
-  MaxLength: (value: string | number | string[], validation: ValidationObj) => {
+  MaxLength: (value: string | number | string[], validation: any) => {
     if (!value) {
       return true;
     }
@@ -33,7 +32,7 @@ var validationFunctions = {
    * Returns true/false based on if the value length is not more than specified length.
    */
 
-  MinLength: (value: string | number, validation: ValidationObj) => {
+  MinLength: (value: string | number, validation: any) => {
     if (!value) {
       return true;
     }
@@ -52,7 +51,7 @@ var validationFunctions = {
     return length <= value.length;
   },
 
-  Length: (value: string | number, validation: ValidationObj) => {
+  Length: (value: string | number, validation: any) => {
     if (!value) {
       return true;
     }
@@ -77,7 +76,7 @@ var validationFunctions = {
    * @param {value} value the value that needs to be tested.
    * @param {value} min minimum value allowed.
    */
-  Min: (value: number | string | string[], validation: ValidationObj) => {
+  Min: (value: number | string | string[], validation: any) => {
     let min = validation.value || 0;
     if (!value) {
       return true;
@@ -89,7 +88,7 @@ var validationFunctions = {
    * @param {value} value the value that needs to be tested.
    * @param {value} max maximum value allowed.
    */
-  Max: (value: number | string | string[], validation: ValidationObj) => {
+  Max: (value: number | string | string[], validation: any) => {
     let max = validation.value || 0;
     if (!value) {
       return true;
@@ -119,7 +118,7 @@ var validationFunctions = {
    *
    * Returns true/false based on if the value passed the regular expression test or not.
    */
-  Pattern: (value: string | number | string[], validation: ValidationObj) => {
+  Pattern: (value: string | number | string[], validation: any) => {
     let regex = validation.expression || new RegExp("");
     if (!value) {
       return true;
@@ -159,7 +158,7 @@ var validationFunctions = {
    */
   StringValidate: (
     value: string | number | string[],
-    validation: ValidationObj
+    validation: any
   ) => {
     let regex = validation.expression || new RegExp("");
     if (!value) {
@@ -177,7 +176,7 @@ var validationFunctions = {
    */
   IntegerValidate: (
     value: string | number | string[],
-    validation: ValidationObj
+    validation: any
   ) => {
     let regex = validation.expression || new RegExp("");
     if (!value) {
@@ -195,7 +194,7 @@ var validationFunctions = {
    */
   WordLimitValidate: (
     value: string | number | string[],
-    validation: ValidationObj
+    validation: any
   ) => {
     let length: any = validation.value || 0;
     const arr = value.toString().split(" ");
@@ -216,7 +215,7 @@ var validationFunctions = {
    */
   checkFormValidity: (
     form: any,
-    validations: ValidationSet,
+    validations: any,
     CompareValue?: any
   ) => {
    

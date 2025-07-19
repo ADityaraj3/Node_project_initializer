@@ -13,7 +13,7 @@ const HomePage: React.FC = () => {
       name: 'Vite',
       link: 'vite',
       description: 'Vite is a build tool that aims to provide a faster and leaner development experience for modern web projects.',
-      image: '/public/vite-logo.svg',
+      image: '/vite-logo.svg',
       alt: 'Vite Logo',
       services: [
         { icon: <FaReact />, name: 'React' },
@@ -30,7 +30,7 @@ const HomePage: React.FC = () => {
       name: 'NestJs',
       link: '/nest',
       description: 'Nest is a framework that provides a set of tools and utilities to help you build scalable and maintainable server-side applications.',
-      image: '/public/nest-logo.svg',
+      image: '/nest-logo.svg',
       alt: 'Nest Logo',
       services: [
         { icon: <SiNestjs />, name: 'NestJs' },
@@ -40,7 +40,7 @@ const HomePage: React.FC = () => {
       name: 'NextJs',
       link: '/next',
       description: 'Next.js is a React framework that enables server-side rendering and generating static websites for React based web applications.',
-      image: '/public/nextjs-logo.svg',
+      image: '/nextjs-logo.svg',
       alt: 'Next Logo',
       services: [
         { icon: <RiNextjsFill />, name: 'NextJs' },
@@ -50,7 +50,7 @@ const HomePage: React.FC = () => {
       name: 'Express',
       link: '/express',
       description: 'Express is a minimal and flexible Node.js web application framework that provides a robust set of features for web applications.',
-      image: '/public/express-logo.svg',
+      image: '/express-logo.svg',
       alt: 'Express Logo',
       services: [
         { icon: <SiExpress />, name: 'Express' },
@@ -60,7 +60,7 @@ const HomePage: React.FC = () => {
       name: 'Angular',
       link: '/angular',
       description: 'Angular is a platform for building mobile and desktop web applications using TypeScript/JavaScript and other languages.',
-      image: '/public/angular-logo.svg',
+      image: '/angular-logo.svg',
       alt: 'Angular Logo',
       services: [
         { icon: <SiAngular />, name: 'Angular' },

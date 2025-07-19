@@ -17,7 +17,7 @@ const Nest: React.FC = () => {
     const fetchStructure = async () => {
         try {
             setLoading(true);
-            await fetchStructureProjectNest('http://localhost:3003/nest-app/fetch-structure', {
+            await fetchStructureProjectNest('http://128.199.27.112:3003/nest-app/fetch-structure', {
             }, setStructure);
         } catch (error) {
             console.error('Error fetching structure:', error);
@@ -27,7 +27,7 @@ const Nest: React.FC = () => {
     };
 
     const handleSaveStructure = async () => {
-        await handleSaveStructureProject('http://localhost:3003/nest-app/create', {
+        await handleSaveStructureProject('http://128.199.27.112:3003/nest-app/create', {
             structure: structure,
             packageJson: packageJson,
         }, "nest-app");

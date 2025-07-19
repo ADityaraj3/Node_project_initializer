@@ -20,7 +20,7 @@ const Vite: React.FC = () => {
         try {
             setLoading(true);
             const finalFramework = language === 'typescript' ? `${framework}-ts` : framework;
-            await fetchStructureProjectVite('http://localhost:3003/vite-app/fetch-structure', {
+            await fetchStructureProjectVite('http://128.199.27.112:3003/vite-app/fetch-structure', {
                 framework: finalFramework,
             }, setStructure);
         } catch (error) {
@@ -32,7 +32,7 @@ const Vite: React.FC = () => {
 
     const handleSaveStructure = async () => {
         const finalFramework = language === 'typescript' ? `${framework}-ts` : framework;
-        await handleSaveStructureProject('http://localhost:3003/vite-app/create', {
+        await handleSaveStructureProject('http://128.199.27.112:3003/vite-app/create', {
             structure: structure,
             packageJson: packageJson,
             framework: finalFramework,

@@ -17,7 +17,7 @@ const Express: React.FC = () => {
     const fetchStructure = async () => {
         try {
             setLoading(true);
-            await fetchStructureProjectExpress('http://localhost:3003/express-app/fetch-structure', {
+            await fetchStructureProjectExpress('http://128.199.27.112:3003/express-app/fetch-structure', {
             }, setStructure);
         } catch (error) {
             console.error('Error fetching structure:', error);
@@ -27,7 +27,7 @@ const Express: React.FC = () => {
     };
 
     const handleSaveStructure = async () => {
-        await handleSaveStructureProject('http://localhost:3003/express-app/create', {
+        await handleSaveStructureProject('http://128.199.27.112:3003/express-app/create', {
             structure: structure,
             packageJson: packageJson,
         }, "express-app");

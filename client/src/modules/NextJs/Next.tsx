@@ -18,7 +18,7 @@ const Next: React.FC = () => {
     const fetchStructure = async () => {
         try {
             setLoading(true);
-            await fetchStructureProjectNext('http://localhost:3003/next-app/fetch-structure', {
+            await fetchStructureProjectNext('http://128.199.27.112:3003/next-app/fetch-structure', {
                 language
             }, setStructure);
         } catch (error) {
@@ -29,7 +29,7 @@ const Next: React.FC = () => {
     };
 
     const handleSaveStructure = async () => {
-        await handleSaveStructureProject('http://localhost:3003/next-app/create', {
+        await handleSaveStructureProject('http://128.199.27.112:3003/next-app/create', {
             structure: structure,
             packageJson: packageJson,
             language

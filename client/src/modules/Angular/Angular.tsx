@@ -17,7 +17,7 @@ const Angular: React.FC = () => {
     const fetchStructure = async () => {
         try {
             setLoading(true);
-            await fetchStructureProjectAngular('http://localhost:3003/angular-app/fetch-structure', {
+            await fetchStructureProjectAngular('http://128.199.27.112:3003/angular-app/fetch-structure', {
             }, setStructure);
         } catch (error) {
             console.error('Error fetching structure:', error);
@@ -27,7 +27,7 @@ const Angular: React.FC = () => {
     };
 
     const handleSaveStructure = async () => {
-        await handleSaveStructureProject('http://localhost:3003/angular-app/create', {
+        await handleSaveStructureProject('http://128.199.27.112:3003/angular-app/create', {
             structure: structure,
             packageJson: packageJson,
         }, "angular-app");
